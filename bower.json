@@ -1,0 +1,21 @@
+{
+  "name": "pushpath",
+  "version": "0.1.0",
+  "homepage": "https://github.com/pushpath/pushpath",
+  "authors": [
+    "Richard Sentino <richard@mingdinative.com>"
+  ],
+  "license": "Apache-2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+	  "angular": "git://github.com/angular/bower-angular.git#~1.2.15",
+	  "angular-route": "git://github.com/angular/bower-angular-route.git#~1.2.15",
+	  "typescript-node-definitions": "git@github.com:soywiz/typescript-node-definitions.git",
+	  "definitely-typed": "git@github.com:borisyankov/DefinitelyTyped.git"
+  }
+}

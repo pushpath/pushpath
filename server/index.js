@@ -19,10 +19,16 @@
  *
  */
 
-var Dashboard = function(app) {
-    app.get('/api/dashboard', function(req, res){
-        res.send();
-    });
-}
+var fs = require('fs'),
+    path = require('path');
 
-module.exports = Dashboard;
+module.exports = function(app){
+    fs.readdirSync(__dirname).forEach(function(file){
+        var filename = __dirname + '/' + file;
+        var route = path.basename(filename, '.js');
+
+        if (route !== 'index' && route[0] !== '.') {
+            exports[route] = require(filename)(app);
+        }
+    });
+};

@@ -19,10 +19,29 @@
  *
  */
 
-var Dashboard = function(app) {
-    app.get('/api/dashboard', function(req, res){
-        res.send();
-    });
-}
+var express  = require('express');
+var app      = express();
 
-module.exports = Dashboard;
+app.configure(function() {
+	app.use(express.static(__dirname + '/.tmp'));
+	app.use(express.logger('dev'));
+	app.use(express.json());
+	app.use(express.urlencoded());
+	app.use(app.router);
+	app.use(express.bodyParser());
+	app.use(express.methodOverride());
+
+	// development only
+	if ('development' == app.get('env')) {
+		app.use(express.errorHandler());
+	}
+});
+
+var api_server = require('./server')(app);
+
+app.get("*", function(req, res){
+	res.sendfile("/.tmp/index.html");
+});
+
+app.listen(8080);
+console.log("Pushpath listening on port 8080");

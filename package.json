@@ -1,0 +1,36 @@
+{
+  "name": "pushpath",
+  "version": "0.1.0",
+  "description": "pushpath ========",
+  "main": "pushpath.js",
+  "scripts": {
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pushpath/pushpath.git"
+  },
+  "author": "Richard Sentino <richard@mindginative.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/pushpath/pushpath/issues"
+  },
+  "dependencies": {
+    "restify": "2.7.0",
+    "gulp": "^3.5.6",
+    "gulp-tsc": "0.6.0",
+    "tiny-lr": "0.0.5",
+    "gulp-browserify": "0.5.0",
+    "express": "~3.5.1",
+	"gulp-nodemon":"latest",
+	"gulp-clean":"latest",
+	"gulp-rename":"latest",
+	"gulp-stylus":"latest",
+	"gulp-livereload":"latest",
+	"event-stream":"latest"
+  },
+  "napa": {
+    "angular": "angular/bower-angular",
+    "angular-route": "angular/bower-angular-route"
+  }
+}

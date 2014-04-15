@@ -3,9 +3,12 @@
 import projectService = require('modules/project/project-service');
 
 export interface Scope extends  ng.IScope {
-    newProject: projectService.projectDtails;
+    currentProjectId: string;
+    projectDetails: any;
 
     addProject: () => void;
+    updateProject: () => void;
+    deleteProject: (currentProjectId) => void;
 }
 
 export var ProjectDirective = function(
@@ -15,8 +18,29 @@ export var ProjectDirective = function(
         replace: true,
         templateUrl: 'modules/project/project-directive.html',
         link: function(scope: Scope) {
+
+            var loadProjectDetails: () => void;
+
+            scope.currentProjectId = '';
+            scope.projectDetails = ''
+
+            loadProjectDetails = (): void => {
+                scope.projectDetails = projectSrv.getProject(scope.currentProjectId);
+            }
+
             scope.addProject = (): void => {
-                projectSrv.addProject(scope.newProject);
+                projectSrv.addProject(scope.projectDetails).then(
+                    function(response){
+                    }
+                );
+            }
+
+            scope.updateProject = (): void => {
+                projectSrv.addProject(scope.projectDetails);
+            }
+
+            scope.deleteProject = (currentProjectId: string): void => {
+                projectSrv.deleteProject(currentProjectId);
             }
         }
     }

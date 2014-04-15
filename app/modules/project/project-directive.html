@@ -1,89 +1,88 @@
 <div class="project-container">
-<strong><i class="glyphicon glyphicon-briefcase"></i> Add Project</strong>
+<strong><i class="glyphicon glyphicon-briefcase"></i> Project</strong>
 <hr>
 <div class="row">
     <div class="col-md-12">
         <div class="well">
-            <form role="form" class="form-horizontal">
+            <form name="project" role="form" class="form-horizontal">
                 <fieldset>
                     <legend><h5 class="text-muted">Project</h5></legend>
-                    <div class="form-group has-error">
+                    <div class="form-group" ng-class="{'has-error': !!project.name.$error.required}">
                         <label for="vagrant-config-vm-box" class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-config-vm-box" placeholder="Base" value="" name="config_name" ng-model="newProject.name">
-                            <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                            <input type="text" class="form-control" id="vagrant-config-vm-box" placeholder="Base" value="" name="name" ng-model="projectDetails.name" required>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend><h5 class="text-muted">VM</h5></legend>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.vm_box.$error.required}">
                         <label for="vagrant-config-vm-box" class="col-sm-4 control-label">VM Box</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-config-vm-box" placeholder="Base" value="" name="config_vm_box" ng-model="newProject.vm_box">
+                            <input type="text" class="form-control" id="vagrant-config-vm-box" placeholder="Base" value="" name="vm_box" ng-model="projectDetails.vm_box" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.vm_box_url.$error.required}">
                         <label for="vagrant-config-vm-box-url" class="col-sm-4 control-label">VM Box Url</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-config-vm-box-url" placeholder="" value="" name="config_vm_box_url"  ng-model="newProject.vm_box_url">
+                            <input type="text" class="form-control" id="vagrant-config-vm-box-url" placeholder="" value="" name="vm_box_url"  ng-model="projectDetails.vm_box_url" required>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend><h5 class="text-muted">Network</h5></legend>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.network_type.$error.required}">
                         <label for="vagrant-network-type" class="col-sm-4 control-label">Network Type</label>
                         <div class="col-sm-6">
-                            <select class="form-control" name="network_type" ng-model="newProject.network_type">
+                            <select class="form-control" name="network_type" ng-model="projectDetails.network_type" required>
                                 <option value="public_network"  selected>Public</option>
                                 <option value="private_network">Private</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.network_ip.$error.required}">
                         <label for="vagrant-network-ip" class="col-sm-4 control-label">Network IP</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-network-ip" placeholder="" value="" name="network_ip" ng-model="newProject.network_ip">
+                            <input type="text" class="form-control" id="vagrant-network-ip" placeholder="" value="" name="network_ip" ng-model="projectDetails.network_ip" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.hostname.$error.required}">
                         <label for="vagrant-network-hostname" class="col-sm-4 control-label">Network Hostname</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-network-hostname" placeholder="" value="" name="network_hostname" ng-model="newProject.hostname">
+                            <input type="text" class="form-control" id="vagrant-network-hostname" placeholder="" value="" name="hostname" ng-model="projectDetails.hostname" required>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend><h5 class="text-muted">Provider</h5></legend>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.vm_provider.$error.required}">
                         <label for="vagrant-provider-type" class="col-sm-4 control-label">VM Provider Type</label>
                         <div class="col-sm-6">
-                            <select class="form-control" name="provider_type" ng-model="newProject.vm_provider">
+                            <select class="form-control" name="vm_provider" ng-model="projectDetails.vm_provider" required>
                                 <option value="virtualbox" selected>VirtualBox</option>
                                 <option value="vmware">VMWare</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.vm_provider_name.$error.required}">
                         <label for="vagrant-provider-name" class="col-sm-4 control-label">VM Provider Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="vagrant-provider-name" placeholder="" value="" name="provider_name" ng-model="newProject.vm_provide_name">
+                            <input type="text" class="form-control" id="vagrant-provider-name" placeholder="" value="" name="vm_provider_name" ng-model="projectDetails.vm_provider_name" required>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend><h5 class="text-muted">Synced Folder</h5></legend>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.synced_folder_src.$error.required}">
                         <label for="config_vm_synced_folder_src" class="col-sm-4 control-label">Source</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="config_vm_synced_folder_src" placeholder="shared/www" value="" name="config_vm_synced_folder_src" ng-model="newProject.synced_folder_src">
+                            <input type="text" class="form-control" id="config_vm_synced_folder_src" placeholder="shared/www" value="" name="synced_folder_src" ng-model="projectDetails.synced_folder_src" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': !!project.synced_folder_target.$error.required}">
                         <label for="config_vm_synced_folder_target" class="col-sm-4 control-label">Target</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="config_vm_synced_folder_target" placeholder="/vagrant_www" value="" name="config_vm_synced_folder_target" ng-model="newProject.synced_folder_target">
+                            <input type="text" class="form-control" id="config_vm_synced_folder_target" placeholder="/vagrant_www" value="" name="synced_folder_target" ng-model="projectDetails.synced_folder_target" required>
                         </div>
                     </div>
                 </fieldset>

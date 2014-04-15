@@ -4,19 +4,34 @@
 
 require('angular/angular');
 require('angular-route/angular-route');
+require('../bower_components/angular-mocks/angular-mocks');
 require('./modules/dashboard/_module');
 require('./modules/settings/_module');
 require('./modules/project/_module');
+
+var appE2E = angular.module('appE2E', ['ngMockE2E'])
+    .run(function($httpBackend){
+        $httpBackend.whenGET('/api/').respond(
+            {message: 'success'}
+        );
+        $httpBackend.whenPOST('/api/').respond(
+            {message: 'success'}
+        );
+
+        $httpBackend.whenGET(/^\w+.*/).passThrough();
+        $httpBackend.whenPOST(/^\w+.*/).passThrough();
+    });
 
 var app = angular.module('Pushpath', [
 	'ngRoute',
 	'Pushpath.Dashboard',
 	'Pushpath.Settings',
-	'Pushpath.Project'
+	'Pushpath.Project',
+    'appE2E'
 ]);
 
-app.config(['$routeProvider',
-	function($routeProvider){
+app.config(['$httpProvider','$routeProvider',
+	function($httpProvider, $routeProvider){
 		$routeProvider
 			.when('/', {
 				templateUrl: 'modules/dashboard/dashboard-view.html',
@@ -31,4 +46,3 @@ app.config(['$routeProvider',
             });
 	}
 ]);
-

@@ -19,18 +19,20 @@ export class ProjectService {
     }
 
     addProject = (project: any): ng.IHttpPromise <any> => {
-        return this.$http.get('/api/project');
+        return this.$http.post('/api/', {
+            data: project
+        });
     }
 
     updateProject = (project: any): ng.IHttpPromise <any> => {
-        return this.$http.get('/api/project');
+        return this.$http.get('/api/');
     }
 
     getProject = (currentProjectId: string): ng.IHttpPromise <any> => {
-        return this.$http.get('/api/project');
+        return this.$http.get('/api/');
     }
 
     deleteProject = (currentProjectId: string): ng.IHttpPromise <any> => {
-        return this.$http.get('/api/project');
+        return this.$http.get('/api/');
     }
 }

@@ -25,8 +25,14 @@ export var ProjectDirective = function(
             scope.projectDetails = ''
 
             loadProjectDetails = (): void => {
-                scope.projectDetails = projectSrv.getProject(scope.currentProjectId);
+                projectSrv.getProject(scope.currentProjectId).then(
+                    function() {
+                        scope.currentProjectId = 'abc123';
+                    }
+                )
             }
+
+            loadProjectDetails();
 
             scope.addProject = (): void => {
                 projectSrv.addProject(scope.projectDetails).then(
@@ -36,11 +42,24 @@ export var ProjectDirective = function(
             }
 
             scope.updateProject = (): void => {
-                projectSrv.addProject(scope.projectDetails);
+                projectSrv.addProject(scope.projectDetails).then(
+                    function() {
+                        // project updated
+                    },
+                    function(reason) {
+                    }
+                );
             }
 
             scope.deleteProject = (currentProjectId: string): void => {
-                projectSrv.deleteProject(currentProjectId);
+                projectSrv.deleteProject(currentProjectId).then(
+                    function(){
+                        // project deleted
+                    },
+                    function(reason) {
+                        // server error
+                    }
+                );
             }
         }
     }

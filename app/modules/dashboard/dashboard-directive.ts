@@ -8,6 +8,7 @@ export interface Scope extends ng.IScope {
 
 export var DashboardDirective = function($http: ng.IHttpService) {
     return {
+        restrict: 'E',
         replace: true,
         templateUrl: 'modules/dashboard/dashboard-directive.html',
         link: function(scope: Scope) {

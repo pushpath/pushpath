@@ -15,8 +15,9 @@ export var ProjectDirective = function(
         projectSrv: projectService.ProjectService
     ) {
     return {
+        restrict: 'E',
         replace: true,
-        templateUrl: 'modules/project/project-directive.html',
+        templateUrl: 'modules/project/project-details-directive.html',
         link: function(scope: Scope) {
 
             var loadProjectDetails: () => void;

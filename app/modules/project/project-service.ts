@@ -1,16 +1,12 @@
 /// <reference path="../../libs.d.ts" />
 
 export interface projectDetails {
+    id: string;
     name: string;
-    vm_box: string;
-    vm_box_url: string;
-    network_type: string;
-    network_ip: string;
-    network_hostname: string;
-    vm_provider: string;
-    vm_provider_name: string;
-    synced_folder_source: string;
-    synced_folder_target: string;
+    box_url: string;
+    ip_address: string;
+    sync_folder: string;
+    target_folder: string;
 }
 
 export class ProjectService {

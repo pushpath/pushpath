@@ -24,8 +24,15 @@ export class ProjectService {
         return this.$http.get('/api/');
     }
 
-    getProject = (currentProjectId: string): ng.IHttpPromise <any> => {
-        return this.$http.get('/api/');
+    getProject = (currentProjectId: string): ng.IPromise <any> => {
+        return this.$http.get('/api/')
+            .then((response) => {
+                return {
+                    data: {
+                        id: 1
+                    }
+                };
+            });
     }
 
     deleteProject = (currentProjectId: string): ng.IHttpPromise <any> => {

@@ -5,7 +5,7 @@ import projectService = require('modules/project/project-service');
 export interface ProjectControllerScope extends ng.IScope {
     currentProjectId: string;
     projectDetails: any;
-    project: projectService.projectDetails;
+    project: any;
 
     addProject: () => void;
     updateProject: () => void;
@@ -18,7 +18,8 @@ export class ProjectController {
     constructor(scope: ProjectControllerScope, projectSrv: projectService.ProjectService) {
         var loadProjectDetails: () => void;
         scope.currentProjectId = '';
-        scope.projectDetails = ''
+        scope.projectDetails = {};
+        scope.project = {};
 
         scope.addProject = (): void => {
             if (scope.project) {
@@ -32,9 +33,7 @@ export class ProjectController {
         loadProjectDetails = (): void => {
             projectSrv.getProject(scope.currentProjectId).then(
                 function(response) {
-                    if (response.data.project) {
-                        scope.currentProjectId = response.data.project['id'];
-                    }
+                    scope.project = response.data;
                 }
             )
         }

@@ -50,6 +50,7 @@ export class ProjectController {
         scope.deleteProject = (currentProjectId: string): void => {
             projectSrv.deleteProject(currentProjectId).then(
                 function(response){
+                    scope.project = {};
                     console.log('project deleted...');
                 }
             );

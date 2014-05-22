@@ -10,16 +10,9 @@ export var DashboardDirective = function($http: ng.IHttpService) {
     return {
         restrict: 'E',
         replace: true,
+        controller: 'DashboardController',
         templateUrl: 'modules/dashboard/dashboard-directive.html',
         link: function(scope: Scope) {
-
-            scope.test = () => {
-                $http.get('/api/dashboard')
-                    .then(
-                        function(data){
-                            console.log(data);
-                        });
-            }
         }
     }
 }

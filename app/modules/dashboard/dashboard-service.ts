@@ -10,7 +10,13 @@ export class DashboardService {
         return this.$http.get('/api/')
             .then((response) => {
                 return {
-                    data: { id: 1}
+                    data: {
+                        os: 'Ubuntu',
+                        cpu: 'Intel',
+                        memory: '256MB',
+                        disk_size: '20G',
+                        vm_type: 'Virtual Box'
+                    }
                 };
             });
     }
@@ -19,7 +25,15 @@ export class DashboardService {
         return this.$http.get('/api/')
             .then((response) => {
                 return {
-                    data : {id: 1}
+                    data : {
+                        id: 1,
+                        name: 'my local dev',
+                        box_url: 'http://',
+                        ip_address: '192.168.x.x',
+                        sync_folder: '/var/sync',
+                        target_folder: '/var/target',
+                        hostname: 'my.localdev'
+                    }
                 };
             });
     }

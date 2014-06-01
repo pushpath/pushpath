@@ -19,33 +19,71 @@
 
         <!-- Main row -->
         <div class="row">
-            <!-- Left col -->
-            <section class="col-lg-6 connectedSortable">
-                <div class="box box-danger" id="loading-example">
+            <section class="col-lg-6">
+                <div class="box box-danger">
                     <div class="box-header">
                         <i class="fa fa-cloud"></i>
-                        <h3 class="box-title">VM Information</h3>
+                        <h3 class="box-title">Project</h3>
                     </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <div class="row">
-                        </div><!-- /.row - inside box -->
+                    <div class="box-body">
+                        <dl class="dl-horizontal">
+                            <dt>ID</dt>
+                            <dd>{{project.id}}</dd>
+
+                            <dt>Name</dt>
+                            <dd>{{project.name}}</dd>
+
+                            <dt>Created</dt>
+                            <dd>2 June 2014</dd>
+
+                            <dt>Box URL</dt>
+                            <dd>{{project.box_url}}</dd>
+
+                            <dt>IP Address</dt>
+                            <dd>{{project.ip_address}}</dd>
+
+                            <dt>Hostname</dt>
+                            <dd>{{project.hostname}}</dd>
+
+                            <dt>Sync Folder</dt>
+                            <dd>{{project.sync_folder}}</dd>
+
+                            <dt>Target Folder</dt>
+                            <dd>{{project.target_folder}}</dd>
+
+                        </dl>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
+            </section>
 
-            </section><!-- /.Left col -->
-            <section class="col-lg-6 connectedSortable">
-                <div class="box box-danger" id="loading-example">
+            <section class="col-lg-6">
+                <div class="box box-danger">
                     <div class="box-header">
                         <i class="fa fa-cloud"></i>
-                        <h3 class="box-title">Project Information</h3>
+                        <h3 class="box-title">VM</h3>
                     </div><!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <div class="row">
-                        </div><!-- /.row - inside box -->
+                    <div class="box-body">
+                        <dl class="dl-horizontal">
+                            <dt>Operating System</dt>
+                            <dd>{{vm.os}}</dd>
+
+                            <dt>CPU</dt>
+                            <dd>{{vm.cpu}}</dd>
+
+                            <dt>Memory</dt>
+                            <dd>{{vm.memory}}</dd>
+
+                            <dt>Disk Size</dt>
+                            <dd>{{vm.disk_size}}</dd>
+
+                            <dt>VM Type</dt>
+                            <dd>{{vm.vm_type}}</dd>
+
+                        </dl>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
+            </section>
 
-            </section><!-- /.Left col -->
         </div><!-- /.row (main row) -->
     </section><!-- /.content -->
 </div>

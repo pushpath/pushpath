@@ -1,11 +1,10 @@
 /// <reference path="../../libs.d.ts" />
 
 import projectService = require('modules/project/project-service');
+import models = require('./models');
 
 export interface ProjectControllerScope extends ng.IScope {
-    currentProjectId: string;
-    projectDetails: any;
-    project: any;
+    project: models.Project;
 
     addProject: () => void;
     updateProject: () => void;
@@ -13,13 +12,13 @@ export interface ProjectControllerScope extends ng.IScope {
 }
 
 export class ProjectController {
-    static $inject = ['$scope', 'projectSrv'];
+    static $inject = ['$scope', 'projectSrv', '$q'];
 
-    constructor(scope: ProjectControllerScope, projectSrv: projectService.ProjectService) {
-        var loadProjectDetails: () => void;
-        scope.currentProjectId = '';
-        scope.projectDetails = {};
-        scope.project = {};
+    constructor(scope: ProjectControllerScope,
+                projectSrv: projectService.ProjectService,
+                $q: ng.IQService) {
+
+        scope.project = <models.Project>{};
 
         scope.addProject = (): void => {
             if (scope.project) {
@@ -30,17 +29,8 @@ export class ProjectController {
             }
         }
 
-        loadProjectDetails = (): void => {
-            projectSrv.getProject(scope.currentProjectId).then(
-                function(response) {
-                    scope.project = response.data;
-                }
-            )
-        }
-        loadProjectDetails();
-
         scope.updateProject = (): void => {
-            projectSrv.addProject(scope.projectDetails).then(
+            projectSrv.addProject(scope.project).then(
                 function() {
                     console.log('project update...');
                 }
@@ -49,11 +39,18 @@ export class ProjectController {
 
         scope.deleteProject = (currentProjectId: string): void => {
             projectSrv.deleteProject(currentProjectId).then(
-                function(response){
-                    scope.project = {};
+                function(){
+                    scope.project = <models.Project>{};
+
                     console.log('project deleted...');
                 }
             );
         }
+
+        $q.all([
+            projectSrv.getProject()
+        ]).then((promises: any[]) => {
+            scope.project = <models.Project>promises[0].data;
+        });
     }
 }

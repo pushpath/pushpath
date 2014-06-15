@@ -24,7 +24,7 @@ export class ProjectService {
         return this.$http.get('/api/');
     }
 
-    getProject = (currentProjectId: string): ng.IPromise <any> => {
+    getProject = (): ng.IPromise <any> => {
         return this.$http.get('/api/')
             .then((response) => {
                 return {

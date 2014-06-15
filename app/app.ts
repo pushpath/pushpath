@@ -36,6 +36,9 @@ app.config(['$httpProvider','$routeProvider',
 			.when('/', {
 				template: '<dashboard></dashboard>'
 			})
+            .when('/dashboard', {
+                template: '<dashboard></dashboard>'
+            })
             .when('/settings', {
                 templateUrl: 'modules/settings/settings-view.html',
                 controller: 'SettingsController'

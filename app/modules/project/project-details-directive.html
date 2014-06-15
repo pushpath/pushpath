@@ -40,6 +40,10 @@
                             <input type="text" class="form-control" placeholder="Enter this box IP address" ng-model="project.ip_address" required>
                         </div>
                         <div class="form-group">
+                            <label for="hostname">Hostname:</label>
+                            <input type="text" class="form-control" placeholder="Enter this box Hostname" ng-model="project.hostname" required>
+                        </div>
+                        <div class="form-group">
                             <label for="sync_folder">Sync Folder:</label>
                             <input type="text" class="form-control" placeholder="Enter sync folder" ng-model="project.sync_folder" required>
                         </div>
@@ -52,7 +56,7 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary" ng-click="addProject()" ng-show="!project.id">Save</button>
                         <button type="submit" class="btn btn-primary" ng-click="updateProject()" ng-show="project.id">Update</button>
-                        <button type="submit" class="btn btn-primary" ng-click="deleteProject(project.id)" ng-show="project.id">Delete</button>
+                        <button type="submit" class="btn btn-danger" ng-click="deleteProject(project.id)" ng-show="project.id">Delete</button>
                     </div>
                 </form>
             </div><!-- /.box -->

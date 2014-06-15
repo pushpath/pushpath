@@ -29,7 +29,13 @@ export class ProjectService {
             .then((response) => {
                 return {
                     data: {
-                        id: 1
+                        id: 1,
+                        name: 'my local dev',
+                        box_url: 'http://',
+                        ip_address: '192.168.x.x',
+                        sync_folder: '/var/sync',
+                        target_folder: '/var/target',
+                        hostname: 'my.localdev'
                     }
                 };
             });

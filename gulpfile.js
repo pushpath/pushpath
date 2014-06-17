@@ -9,7 +9,11 @@ var clean = require("gulp-clean");
 var es = require("event-stream");
 var refresh = require('gulp-livereload');
 var express = require('express');
+var runSequence = require('gulp-run-sequence');
+
 var appserver = express();
+var watch = require('gulp-watch');
+var plumber = require('gulp-plumber');
 
 var LIVERELOAD_PORT = 35729;
 var EXPRESS_PORT = 3000;
@@ -37,7 +41,7 @@ function start_express() {
 	console.log('[Pushpath] Express listening on port ' + EXPRESS_PORT);
 }
 
-gulp.task('typescript', ['clean'],  function(){
+gulp.task('build-typescript',  function(){
 	return gulp.src([paths.ts])
 		.pipe(typescript({
 			sourcemap: false
@@ -45,21 +49,37 @@ gulp.task('typescript', ['clean'],  function(){
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('browserify', ['typescript'], function(){
+gulp.task('build-browserify', function(){
 	return gulp.src(paths.build + 'app.js')
 		.pipe(browserify())
 		.pipe(gulp.dest(paths.tmp));
 });
 
-gulp.task('assets', ['browserify'], function(){
+gulp.task('build-assets', function(){
 	return es.concat(
 		gulp.src(paths.html)
+            .pipe(watch(function(){
+                gulp.dest(paths.tmp)
+                    .pipe(refresh());
+            }))
 			.pipe(gulp.dest(paths.tmp)),
 		gulp.src(paths.fonts)
+            .pipe(watch(function(){
+                gulp.dest(paths.tmp)
+                    .pipe(refresh());
+            }))
 			.pipe(gulp.dest(paths.tmp)),
 		gulp.src(paths.images)
+            .pipe(watch(function(){
+                gulp.dest(paths.tmp)
+                    .pipe(refresh());
+            }))
 			.pipe(gulp.dest(paths.tmp)),
 		gulp.src(paths.css)
+            .pipe(watch(function(){
+                gulp.dest(paths.tmp)
+                    .pipe(refresh());
+            }))
 			.pipe(gulp.dest(paths.tmp)));
 });
 
@@ -68,20 +88,11 @@ gulp.task('clean', function(){
 		.pipe(clean());
 });
 
-gulp.task('dev', ['assets','browserify', 'typescript'], function(){
-	start_livereload();
-	start_express();
-	console.log('[Pushpath] Done starting up servers');
-});
-
-gulp.task('devx', ['assets','browserify', 'typescript'], function(){
-	nodemon({
-		script: 'pushpath.js',
-		ext: 'html ts js' })
-		.on('change', ['assets','browserify', 'typescript'])
-		.on('restart', function(){
-			console.log('server restart');
-		});
+gulp.task('dev', function(){
+    runSequence('clean', 'build-typescript', 'build-browserify', 'build-assets', function(){
+        start_livereload();
+        start_express();
+    });
 });
 
 gulp.task('default', function(){

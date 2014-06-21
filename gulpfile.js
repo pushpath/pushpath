@@ -2,20 +2,14 @@ var gulp = require('gulp');
 var typescript = require('gulp-tsc');
 var browserify = require('gulp-browserify');
 var path = require('path');
-var tinylr = require('tiny-lr');
 var rename = require("gulp-rename");
 var clean = require("gulp-clean");
-var es = require("event-stream");
-var refresh = require('gulp-livereload');
-var express = require('express');
 var runSequence = require('run-sequence');
-
-var appserver = express();
+var nodemon = require('gulp-nodemon');
 var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
 
-var LIVERELOAD_PORT = 35729;
-var EXPRESS_PORT = 3000;
+var ENV = 'dev';
 
 var paths = {
 	scripts: 'app/**/*.js',
@@ -24,20 +18,15 @@ var paths = {
 	css: 'app/**/*.css',
 	fonts: ['app/**/*.eot', 'app/**/*.svg', 'app/**/*.ttf', 'app/**/*.woff'],
 	images: 'app/**/*.png',
-	tmp: './.tmp/',
-	build: './.build/'
+	build: './.build'
 }
 
-function start_livereload() {
-	tinylr().listen(LIVERELOAD_PORT);
-	console.log('[Pushpath] Tiny-lr listening on ' + LIVERELOAD_PORT);
-}
-
-function start_express() {
-	appserver.use(require('connect-livereload'));
-	appserver.use(express.static(__dirname + path.tmp));
-	appserver.listen(EXPRESS_PORT);
-	console.log('[Pushpath] Express listening on port ' + EXPRESS_PORT);
+function start_hapi() {
+    nodemon({
+        script: 'pushpath.js',
+        ext: 'html js',
+        watch: ['.build/dev/app']
+    });
 }
 
 gulp.task('build-typescript',  function(){
@@ -45,43 +34,43 @@ gulp.task('build-typescript',  function(){
 		.pipe(typescript({
 			sourcemap: false
 		}))
-		.pipe(gulp.dest(paths.build));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('build-browserify', function(){
-	return gulp.src(paths.build + 'app.js')
+	return gulp.src(paths.build + '/' + ENV + '/app/' + '/app.js')
 		.pipe(browserify())
-		.pipe(gulp.dest(paths.tmp));
+        .pipe(rename('app.min.js'))
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('copy-fonts', function(){
 	return gulp.src(paths.fonts)
-		.pipe(gulp.dest(paths.tmp));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('copy-html', function(){
 	return gulp.src(paths.html)
-		.pipe(gulp.dest(paths.tmp));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('copy-images', function(){
 	return gulp.src(paths.images)
-		.pipe(gulp.dest(paths.tmp));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('copy-css', function(){
 	return gulp.src(paths.css)
-		.pipe(gulp.dest(paths.tmp));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('clean', function(){
-	return gulp.src([paths.tmp, paths.build], {read: false})
+	return gulp.src([paths.build], {read: false})
 		.pipe(clean());
 });
 
 gulp.task('start-servers', function(){
-	start_livereload();
-	start_express();
+	start_hapi();
 });
 
 gulp.task('dev', function(){

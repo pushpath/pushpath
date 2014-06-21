@@ -16,24 +16,23 @@
     "url": "https://github.com/pushpath/pushpath/issues"
   },
   "dependencies": {
-    "express": "~3.5.1"
+    "express": "~3.5.1",
+    "hapi": "6.0.2"
   },
   "napa": {
     "angular": "angular/bower-angular",
-    "angular-route": "angular/bower-angular-route"
+    "angular-route": "angular/bower-angular-route",
+    "angular-mocks": "angular/bower-angular-mocks"
   },
   "devDependencies": {
-    "connect-livereload": "^0.4.0",
-    "tiny-lr": "0.0.5",
     "gulp": "^3.5.6",
     "gulp-tsc": "0.6.0",
     "gulp-browserify": "0.5.0",
     "gulp-clean": "~0.3.0",
     "gulp-rename": "~1.2.0",
-    "gulp-livereload": "~2.1.0",
-    "event-stream": "~3.1.5",
     "gulp-watch": "~0.6.6",
     "gulp-plumber": "~0.6.3",
-    "run-sequence": "^0.3.6"
+    "run-sequence": "^0.3.6",
+    "gulp-nodemon": "~1.0.4",
   }
 }

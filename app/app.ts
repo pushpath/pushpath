@@ -4,7 +4,7 @@
 
 require('angular/angular');
 require('angular-route/angular-route');
-require('../bower_components/angular-mocks/angular-mocks');
+require('angular-mocks/angular-mocks');
 require('./modules/dashboard/_module');
 require('./modules/settings/_module');
 require('./modules/project/_module');

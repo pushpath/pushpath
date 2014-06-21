@@ -19,29 +19,20 @@
  *
  */
 
-var express  = require('express');
-var app      = express();
+var Hapi = require('hapi');
+var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
+var env_path = process.env.NODE_ENV || '.build/dev/app';
 
-app.configure(function() {
-	app.use(express.static(__dirname + '/.tmp'));
-	app.use(express.logger('dev'));
-	app.use(express.json());
-	app.use(express.urlencoded());
-	app.use(app.router);
-	app.use(express.bodyParser());
-	app.use(express.methodOverride());
-
-	// development only
-	if ('development' == app.get('env')) {
-		app.use(express.errorHandler());
-	}
+server.route({
+    method: 'GET',
+    path: '/{path*}',
+    handler: {
+        directory: {
+            path: env_path,
+            listing: false,
+            index: true
+        }
+    }
 });
 
-var api_server = require('./server')(app);
-
-app.get("*", function(req, res){
-	res.sendfile("/.tmp/index.html");
-});
-
-app.listen(8080);
-console.log("Pushpath listening on port 8080");
+server.start();

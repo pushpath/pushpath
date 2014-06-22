@@ -20,8 +20,22 @@
  */
 
 var Hapi = require('hapi');
-var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
-var routes = require('./api/routes');
 
-server.route(routes);
-server.start();
+function Project() {
+
+}
+
+Project.prototype = (function(){
+    return {
+        insert: function(request, reply) {
+        },
+        update: function(request, reply) {
+        },
+        delete: function(request, reply) {
+        },
+        info: function(request, reply) {
+        }
+    }
+})();
+
+module.exports = new Project();

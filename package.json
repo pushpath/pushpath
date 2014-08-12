@@ -4,7 +4,7 @@
   "description": "pushpath ========",
   "main": "pushpath.js",
   "scripts": {
-    "start": ""
+    "install": "napa"
   },
   "repository": {
     "type": "git",
@@ -16,21 +16,23 @@
     "url": "https://github.com/pushpath/pushpath/issues"
   },
   "dependencies": {
-    "restify": "2.7.0",
-    "gulp": "^3.5.6",
-    "gulp-tsc": "0.6.0",
-    "tiny-lr": "0.0.5",
-    "gulp-browserify": "0.5.0",
     "express": "~3.5.1",
-	"gulp-nodemon":"latest",
-	"gulp-clean":"latest",
-	"gulp-rename":"latest",
-	"gulp-stylus":"latest",
-	"gulp-livereload":"latest",
-	"event-stream":"latest"
+    "hapi": "6.0.2"
   },
   "napa": {
     "angular": "angular/bower-angular",
-    "angular-route": "angular/bower-angular-route"
+    "angular-route": "angular/bower-angular-route",
+    "angular-mocks": "angular/bower-angular-mocks"
+  },
+  "devDependencies": {
+    "gulp": "^3.5.6",
+    "gulp-tsc": "0.6.0",
+    "gulp-browserify": "0.5.0",
+    "gulp-clean": "~0.3.0",
+    "gulp-rename": "~1.2.0",
+    "gulp-watch": "~0.6.6",
+    "gulp-plumber": "~0.6.3",
+    "run-sequence": "^0.3.6",
+    "gulp-nodemon": "~1.0.4",
   }
 }

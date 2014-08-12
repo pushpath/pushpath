@@ -19,16 +19,34 @@
  *
  */
 
-var fs = require('fs'),
-    path = require('path');
+"use string";
 
-module.exports = function(app){
-    fs.readdirSync(__dirname).forEach(function(file){
-        var filename = __dirname + '/' + file;
-        var route = path.basename(filename, '.js');
+var project = require('./project');
+var settings = require('./settings');
+var path = require('path');
 
-        if (route !== 'index' && route[0] !== '.') {
-            exports[route] = require(filename)(app);
+var routes = function() {
+    return [
+        {
+            method: 'GET',
+            path: '/{path*}',
+            handler: {
+                directory: {
+                    path: path.resolve(__dirname, '../.build/dev/app'),
+                    listing: false,
+                    index: true
+                }
+            }
+        },
+        {
+            method: 'GET',
+            path: '/api/project',
+            config: {
+                handler: function() {
+                }
+            }
         }
-    });
-};
+    ];
+}();
+
+module.exports = routes;

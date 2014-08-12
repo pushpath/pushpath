@@ -2,13 +2,14 @@ var gulp = require('gulp');
 var typescript = require('gulp-tsc');
 var browserify = require('gulp-browserify');
 var path = require('path');
-var tinylr = require('tiny-lr');
-var nodemon = require("gulp-nodemon");
 var rename = require("gulp-rename");
 var clean = require("gulp-clean");
-var es = require("event-stream");
-var refresh = require('gulp-livereload');
-var server = tinylr();
+var runSequence = require('run-sequence');
+var nodemon = require('gulp-nodemon');
+var watch = require('gulp-watch');
+var plumber = require('gulp-plumber');
+
+var ENV = 'dev';
 
 var paths = {
 	scripts: 'app/**/*.js',
@@ -17,57 +18,78 @@ var paths = {
 	css: 'app/**/*.css',
 	fonts: ['app/**/*.eot', 'app/**/*.svg', 'app/**/*.ttf', 'app/**/*.woff'],
 	images: 'app/**/*.png',
-	tmp: './.tmp/',
-	tsbuild: './.tsbuild/'
+	build: './.build'
 }
 
-gulp.task('typescript', function(){
+function start_hapi() {
+    nodemon({
+        script: 'pushpath.js',
+        ext: 'html js',
+        watch: ['.build/dev/app']
+    });
+}
+
+gulp.task('build-typescript',  function(){
 	return gulp.src([paths.ts])
 		.pipe(typescript({
 			sourcemap: false
 		}))
-		.pipe(gulp.dest(paths.tsbuild));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
-gulp.task('browserify', ['typescript'], function(){
-	return gulp.src(paths.tsbuild + 'app.js')
+gulp.task('build-browserify', function(){
+	return gulp.src(paths.build + '/' + ENV + '/app/' + '/app.js')
 		.pipe(browserify())
-		.pipe(gulp.dest(paths.tmp));
+        .pipe(rename('app.min.js'))
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
-gulp.task('assets', ['browserify'], function(){
-	return es.concat(
-		gulp.src(paths.html)
-			.pipe(gulp.dest(paths.tmp)),
-		gulp.src(paths.fonts)
-			.pipe(gulp.dest(paths.tmp)),
-		gulp.src(paths.images)
-			.pipe(gulp.dest(paths.tmp)),
-		gulp.src(paths.css)
-			.pipe(gulp.dest(paths.tmp)))
-		.pipe(refresh(server));
+gulp.task('copy-fonts', function(){
+	return gulp.src(paths.fonts)
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
+});
+
+gulp.task('copy-html', function(){
+	return gulp.src(paths.html)
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
+});
+
+gulp.task('copy-images', function(){
+	return gulp.src(paths.images)
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
+});
+
+gulp.task('copy-css', function(){
+	return gulp.src(paths.css)
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
 });
 
 gulp.task('clean', function(){
-	return gulp.src([paths.tmp, paths.tsbuild], {read: false})
+	return gulp.src([paths.build], {read: false})
 		.pipe(clean());
 });
 
-gulp.task('livereload', function(){
-	server.listen(35729, function(err){
-		if(err) return console.log(err);
-	});
+gulp.task('start-servers', function(){
+	start_hapi();
 });
 
-gulp.task('dev', ['assets','browserify', 'typescript'], function(){
-	nodemon({
-		script: 'pushpath.js',
-		ext: 'html ts js' })
-		.on('change', ['assets','browserify', 'typescript'])
-		.on('restart', function(){
-			console.log('server restart');
+gulp.task('dev', function(){
+    runSequence(
+		'clean',
+		'copy-fonts',
+		'copy-html',
+		'copy-images',
+		'copy-css',
+		'build-typescript',
+		'build-browserify',
+		'start-servers', function(){
+			gulp.watch(paths.html, ['copy-html']);
+			gulp.watch(paths.css, ['copy-css']);
+			gulp.watch(paths.fonts, ['copy-fonts']);
+			gulp.watch(paths.images, ['copy-images']);
 		});
-
 });
 
-gulp.task('default', ['browserify', 'assets']);
+gulp.task('default', function(){
+	console.log('[Pushpath] Do nothing for now...');
+});

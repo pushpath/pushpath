@@ -19,10 +19,20 @@
  *
  */
 
-var Dashboard = function(app) {
-    app.get('/api/dashboard', function(req, res){
-        res.send();
-    });
+var Hapi = require('hapi');
+
+function Settings() {
 }
 
-module.exports = Dashboard;
+Settings.prototype = (function(){
+    return  {
+        update: function(request, reply) {
+
+        },
+        info: function(request, reply) {
+
+        }
+    }
+})();
+
+module.exports = new Settings();

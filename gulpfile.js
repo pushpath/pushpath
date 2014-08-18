@@ -62,12 +62,14 @@ gulp.task('copy-html', function(){
 
 gulp.task('copy-images', function(){
 	return gulp.src(paths.images)
-		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'))
+        .pipe(refresh(server));
 });
 
 gulp.task('copy-css', function(){
 	return gulp.src(paths.css)
-		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'));
+		.pipe(gulp.dest(paths.build + '/' + ENV + '/app'))
+        .pipe(refresh(server));
 });
 
 gulp.task('clean', function(){

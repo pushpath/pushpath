@@ -21,7 +21,7 @@
 
 var Hapi = require('hapi');
 var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
-var routes = require('./api/routes');
+var routes = require('./.build/api/routes');
 
-server.route(routes);
+server.route(routes.routes());
 server.start();

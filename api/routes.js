@@ -32,7 +32,7 @@ var routes = function() {
             path: '/{path*}',
             handler: {
                 directory: {
-                    path: path.resolve(__dirname, '../.build/dev/app'),
+                    path: path.resolve(__dirname, '../.build/app'),
                     listing: false,
                     index: true
                 }

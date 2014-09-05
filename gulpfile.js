@@ -47,8 +47,7 @@ gulp.task('build-api-typescript',  function(){
 		.pipe(typescript({
 			sourcemap: false
 		}))
-		.pipe(gulp.dest(paths.build + '/api'))
-		.pipe();
+		.pipe(gulp.dest(paths.build + '/api'));
 });
 
 gulp.task('build-browserify', function(){
